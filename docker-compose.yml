@@ -1,6 +1,7 @@
 # For local development
-web:
-  build: .
-  dockerfile: Dockerfile
-  ports:
-    - "8080:80"
+services:
+  web:
+    build: .
+    dockerfile: Dockerfile
+    ports:
+      - "8080:80"
