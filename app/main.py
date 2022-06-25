@@ -3,7 +3,7 @@ from fastapi import FastAPI
 import tags
 import items
 import users
-from db import SessionLocal, engine, Base
+from db import engine, Base
 from meta import MUMU_GLOBAL_META
 from mumu_exceptions import register_exception_handlers
 

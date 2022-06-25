@@ -10,7 +10,7 @@
 @description: 
 """
 
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Enum
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Enum
 from sqlalchemy.orm import relationship
 
 from db.base import Base, SessionLocal
@@ -103,12 +103,11 @@ class ItemTag(Base):
 
 if __name__ == '__main__':
     import os
-    import datetime
 
     if os.path.exists("sql_app.db"):
         os.remove("sql_app.db")
     # ONLY FOR TEST
-    from db import engine
+    from app.db import engine
 
     session = SessionLocal()
     Base.metadata.create_all(bind=engine)

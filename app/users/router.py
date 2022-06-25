@@ -14,9 +14,8 @@ from __future__ import annotations
 from datetime import timedelta, datetime
 
 from fastapi import APIRouter, HTTPException, Depends, status
-from fastapi.encoders import jsonable_encoder
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from jose import jwt, JWTError
+from fastapi.security import OAuth2PasswordRequestForm
+from jose import jwt
 from sqlalchemy.orm import Session
 
 import schemas
