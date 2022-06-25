@@ -10,6 +10,9 @@
 @description: 
 """
 from __future__ import annotations
+
+import datetime
+
 from pydantic import BaseModel, Field
 from mumu_enums import ItemState
 
@@ -134,6 +137,7 @@ class User(UserBase):
 class Token(BaseModel):
     access_token: str
     token_type: str
+    token_expires: datetime.datetime
 
 
 class TokenData(BaseModel):
