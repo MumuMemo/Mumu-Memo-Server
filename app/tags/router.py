@@ -9,7 +9,7 @@
 @software: PyCharm 
 @description: 
 """
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from db import get_db

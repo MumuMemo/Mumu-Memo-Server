@@ -1,0 +1,6 @@
+fastapi==0.78.0
+pydantic==1.9.1
+setuptools==60.2.0
+SQLAlchemy==1.4.37
+starlette==0.19.1
+uvicorn==0.17.6

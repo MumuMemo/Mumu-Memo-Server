@@ -15,7 +15,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
 import schemas
-import db.models
 from db import Base
 from db.crud import create_user
 
@@ -31,10 +30,10 @@ class TestDb(unittest.TestCase):
         self.session: Session = SessionLocal()
         Base.metadata.create_all(bind=engine)
         self.test_user = create_user(self.session,
-                                    schemas.UserCreate(name="test", email="jeza@vip.qq.com", password="test"))
+                                     schemas.UserCreate(name="test", email="jeza@vip.qq.com", password="test"))
 
     def test_user_info(self):
-        user = self.session.query(db.models.User).filter(db.models.User.id == self.test_user.id).first()
+        user = self.session.query(app.db.models.User).filter(app.db.models.User.id == self.test_user.id).first()
         self.assertEqual(user.name, "test")
         self.assertEqual(user.email, "jeza@vip.qq.com")
         self.assertEqual(user.hashed_password, "test")
