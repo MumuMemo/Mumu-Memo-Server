@@ -21,8 +21,7 @@ from sqlalchemy.orm import Session
 
 import schemas
 from db import get_db
-from fake_data import fake_tags, fake_items
-from schemas import Tag, TagCreate, TagOutline, Item, Token, TokenData
+from schemas import Token
 import hashlib
 from db.crud import get_user_by_name, create_user
 from users.constants import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
