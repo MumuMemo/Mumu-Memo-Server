@@ -43,7 +43,7 @@ jobs:
         USERNAME: ${{ secrets.USERNAME }}
         KEY: ${{ secrets.SSHKEY }}
         script: |
-          mkdir -p /home/lighthouse/MumuMemoServer
+          if cd /home/lighthouse/MumuMemoServer; then git pull git@github.com:MumuMemo/Mumu-Memo-Server.git; else git clone https://server/repo /home/lighthouse/MumuMemoServer; fi
           cd /home/lighthouse/MumuMemoServer
           git pull git@github.com:MumuMemo/Mumu-Memo-Server.git
           docker-compose up --build -d
