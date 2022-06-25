@@ -78,7 +78,9 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     access_token = create_access_token(
         data={"sub": user.name}, expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token,
+            "token_type": "bearer",
+            "token_expires": access_token_expires + datetime.now()}
 
 
 @router.post("/register", response_model=Token)
@@ -100,7 +102,9 @@ async def register_user(reg_data: schemas.UserCreate, db: Session = Depends(get_
     access_token = create_access_token(
         data={"sub": user.name}, expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token,
+            "token_type": "bearer",
+            "token_expires": access_token_expires + datetime.now()}
 
 
 @router.get("/tests")
