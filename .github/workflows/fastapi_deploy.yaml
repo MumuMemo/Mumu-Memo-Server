@@ -45,7 +45,5 @@ jobs:
         script: |
           mkdir -p /home/lighthouse/MumuMemoServer
           cd /home/lighthouse/MumuMemoServer
-#          cp /home/lighthouse/ssl/* /home/lighthouse/SysuCryptoLabServer
-#          cp /home/lighthouse/server_secrets.py /home/lighthouse/SysuCryptoLabServer/
           git pull git@github.com:MumuMemo/Mumu-Memo-Server.git
           docker-compose up --build -d
