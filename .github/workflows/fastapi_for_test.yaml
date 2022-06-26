@@ -42,7 +42,7 @@ jobs:
         KEY: ${{ secrets.SSHKEY_TEST }}
         script: |
           if cd /home/lighthouse/MumuMemoServer; then 
-          git pull git@github.com:MumuMemo/Mumu-Memo-Server.git ${{ github.head_ref }}
+          git pull origin ${{ github.head_ref }}
           else 
           git clone git@github.com:MumuMemo/Mumu-Memo-Server.git /home/lighthouse/MumuMemoServer
           cd /home/lighthouse/MumuMemoServer

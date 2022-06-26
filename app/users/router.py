@@ -106,7 +106,3 @@ async def register_user(reg_data: schemas.UserCreate, db: Session = Depends(get_
             "token_type": "bearer",
             "token_expires": access_token_expires + datetime.now()}
 
-
-@router.get("/tests")
-async def get_items(token: str = Depends(oauth2_scheme)):
-    return {"token": token}
