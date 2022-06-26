@@ -1,8 +1,8 @@
-name: FASTAPI CI/CD - DEPLOYMENT
+name: FASTAPI CI/CD - DEPLOYMENT FOR TEST
 
 # 觸發條件
 on:
-  push:
+  pull_request:
     branches: [ master ]
 
 # 執行一項或多項任務
@@ -37,10 +37,15 @@ jobs:
     - name: CD
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        KEY: ${{ secrets.SSHKEY }}
+        host: ${{ secrets.HOST_TEST }}
+        USERNAME: ${{ secrets.USERNAME_TEST }}
+        KEY: ${{ secrets.SSHKEY_TEST }}
         script: |
-          if cd /home/lighthouse/MumuMemoServer; then git pull git@github.com:MumuMemo/Mumu-Memo-Server.git; else git clone git@github.com:MumuMemo/Mumu-Memo-Server.git /home/lighthouse/MumuMemoServer; fi
+          if cd /home/lighthouse/MumuMemoServer; then 
+          git pull git@github.com:MumuMemo/Mumu-Memo-Server.git ${{ github.head_ref }}
+          else 
+          git clone git@github.com:MumuMemo/Mumu-Memo-Server.git /home/lighthouse/MumuMemoServer
           cd /home/lighthouse/MumuMemoServer
+          fi
+          git checkout ${{ github.head_ref }}
           docker-compose up --build -d
