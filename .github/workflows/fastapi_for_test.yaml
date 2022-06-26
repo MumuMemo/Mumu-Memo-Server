@@ -41,6 +41,11 @@ jobs:
         USERNAME: ${{ secrets.USERNAME_TEST }}
         KEY: ${{ secrets.SSHKEY_TEST }}
         script: |
-          if cd /home/lighthouse/MumuMemoServer; then git pull git@github.com:MumuMemo/Mumu-Memo-Server.git; else git clone git@github.com:MumuMemo/Mumu-Memo-Server.git /home/lighthouse/MumuMemoServer; fi
+          if cd /home/lighthouse/MumuMemoServer; then 
+          git pull git@github.com:MumuMemo/Mumu-Memo-Server.git ${{ github.event.pull_request.base.ref }}
+          else 
+          git clone git@github.com:MumuMemo/Mumu-Memo-Server.git /home/lighthouse/MumuMemoServer
           cd /home/lighthouse/MumuMemoServer
+          git checkout ${{ github.event.pull_request.base.ref }}
+          fi
           docker-compose up --build -d
