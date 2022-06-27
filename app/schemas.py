@@ -59,15 +59,23 @@ class ItemBase(BaseModel):
 class Item(ItemBase):
     """ Item model returned by the API
     """
-    id: int
-    tags: list['TagOutline'] = []  # 标签id, 标签标题
+    id: int = Field(
+        description="备忘事项的唯一标识符id"
+    )
+    tags: list['TagOutline'] = Field(
+        default=[],
+        description="标签概要列表, 元素为(标签id, 标签标题)"
+    )
 
     class Config:
         orm_mode = True
 
 
 class ItemCreate(ItemBase):
-    linked_tag_ids: list[int] = []  # 标签id
+    linked_tag_ids: list[int] = Field(
+        default=[],
+        description="关联的标签id列表"
+    )
 
 
 class ItemEdit(ItemCreate):
@@ -75,8 +83,14 @@ class ItemEdit(ItemCreate):
 
 
 class ItemOutline(BaseModel):
-    id: int
-    title: str | None
+    id: int = Field(
+        description="备忘事项的唯一标识符id"
+    )
+    title: str | None = Field(
+        default=None,
+        description="备忘事项的标题",
+        max_length=100
+    )
 
     class Config:
         orm_mode = True
@@ -85,13 +99,20 @@ class ItemOutline(BaseModel):
 class TagBase(BaseModel):
     title: str = Field(
         default="未命名标签",
-        title="标签标题"
+        title="标签标题",
+        max_length=100
     )
-    content: str | None = None
+    content: str | None = Field(
+        default=None,
+        description="标签的详细内容",
+    )
 
 
 class TagCreate(TagBase):
-    parent_tag_id: int | None = None  # 父标签id
+    parent_tag_id: int | None = Field(
+        default=None,
+        description="父标签id"
+    )
 
 
 class TagEdit(TagCreate):
@@ -99,49 +120,92 @@ class TagEdit(TagCreate):
 
 
 class TagOutline(BaseModel):
-    id: int
-    title: str | None
+    id: int = Field(
+        description="标签的唯一标识符id"
+    )
+    title: str | None = Field(
+        default=None,
+        description="标签的标题",
+        max_length=100
+    )
 
     class Config:
         orm_mode = True
 
 
 class Tag(TagBase):
-    id: int
-    parent_tag: TagOutline | None = None
-    child_tags: list['TagOutline'] = []
-    items: list['ItemOutline'] = []
+    id: int = Field(
+        description="标签的唯一标识符id"
+    )
+    parent_tag: TagOutline | None = Field(
+        default=None,
+        description="父标签的概要信息"
+    )
+    child_tags: list['TagOutline'] = Field(
+        default=[],
+        description="子标签的概要信息列表, 元素为(标签id, 标签标题)"
+    )
+    items: list['ItemOutline'] = Field(
+        default=[],
+        description="关联的备忘事项的概要信息列表, 元素为(备忘事项id, 备忘事项标题)"
+    )
 
     class Config:
         orm_mode = True
 
 
 class UserBase(BaseModel):
-    name: str
-    email: str | None = None
+    name: str = Field(
+        default="未命名用户",
+        title="用户名",
+        max_length=100
+    )
+    email: str | None = Field(
+        default=None,
+        description="用户的邮箱"
+    )
 
 
 class UserCreate(UserBase):
-    password: str
+    password: str = Field(
+        description="用户的密码"
+    )
 
 
 class User(UserBase):
-    id: int
-    items: list[ItemOutline] = []
-    tags: list[TagOutline] = []
+    id: int = Field(
+        description="用户的唯一标识符id"
+    )
+    items: list[ItemOutline] = Field(
+        default=[],
+        description="用户的备忘事项的概要信息列表, 元素为(备忘事项id, 备忘事项标题)"
+    )
+    tags: list[TagOutline] = Field(
+        default=[],
+        description="用户的标签的概要信息列表, 元素为(标签id, 标签标题)"
+    )
 
     class Config:
         orm_mode = True
 
 
 class Token(BaseModel):
-    access_token: str
-    token_type: str
-    token_expires: datetime.datetime
+    access_token: str = Field(
+        description="访问令牌"
+    )
+    token_type: str = Field(
+        description="令牌类型"
+    )
+    token_expires: datetime.datetime = Field(
+        description="令牌过期时间"
+    )
 
 
 class TokenData(BaseModel):
-    username: str | None = None
+    username: str | None = Field(
+        default=None,
+        description="用户名"
+    )
 
 
 # 由于Item引用了后面的TagOutline, 需要更新一下引用
